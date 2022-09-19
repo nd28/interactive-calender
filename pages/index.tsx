@@ -22,17 +22,17 @@ import {
 import { Fragment, useState } from 'react'
 
 interface TMeeting {
-  id: number;
-  name: string;
-  imageUrl: string;
-  startDateTime: string;
-  endDateTime: string;
+  id: number
+  name: string
+  imageUrl: string
+  startDateTime: string
+  endDateTime: string
 }
 
 const meetings: TMeeting[] = [
   {
     id: 1,
-    name: "Nwil Newton",
+    name: 'Nwil Newton',
     imageUrl:
       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     startDateTime: '2022-09-20T13:00',
@@ -77,10 +77,10 @@ function classNames(...classes: any) {
 }
 
 const Home: NextPage = () => {
-  let today = startOfToday();
-  const [selectedDay, setSelectedDay] = useState(today);
-  const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"))
-  let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
+  let today = startOfToday()
+  const [selectedDay, setSelectedDay] = useState(today)
+  const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
+  let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -89,15 +89,15 @@ const Home: NextPage = () => {
 
   function previousMonth() {
     let firstDayPreviousMonth = add(firstDayCurrentMonth, { months: -1 })
-    setCurrentMonth(format(firstDayPreviousMonth, "MMM-yyyy"))
+    setCurrentMonth(format(firstDayPreviousMonth, 'MMM-yyyy'))
   }
 
   function nextMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"))
+    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
   }
 
-  let selectedDayMeetings = meetings.filter(meeting =>
+  let selectedDayMeetings = meetings.filter((meeting) =>
     isSameDay(parseISO(meeting.startDateTime), selectedDay)
   )
 
@@ -108,10 +108,10 @@ const Home: NextPage = () => {
           <div className="md:pr-14">
             <div className="flex items-center">
               <h2 className="flex-auto font-semibold text-gray-900">
-                {format(firstDayCurrentMonth, "MMM-yyyy")}
+                {format(firstDayCurrentMonth, 'MMM-yyyy')}
               </h2>
               <button
-                type='button'
+                type="button"
                 onClick={previousMonth}
                 className="-my-1.5 flex flex-none items-center p-1.5 text-gray-400 hover:text-gray-500"
               >
@@ -119,7 +119,7 @@ const Home: NextPage = () => {
                 <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
               </button>
               <button
-                type='button'
+                type="button"
                 onClick={nextMonth}
                 className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center p-1.5 text-gray-400 hover:text-gray-500"
               >
@@ -141,7 +141,7 @@ const Home: NextPage = () => {
                 <div
                   key={day.toString()}
                   className={classNames(
-                    dayIdx === 0 && colStartClasses[getDay((day))],
+                    dayIdx === 0 && colStartClasses[getDay(day)],
                     'py-1.5'
                   )}
                 >
@@ -150,13 +150,24 @@ const Home: NextPage = () => {
                     onClick={() => setSelectedDay(day)}
                     className={classNames(
                       isEqual(day, selectedDay) && 'text-white',
-                      !isEqual(day, selectedDay) && isToday(day) && 'text-red-500',
-                      !isEqual(day, selectedDay) && !isToday(day) && isSameMonth(day, firstDayCurrentMonth) && 'text-gray-900',
-                      !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400',
+                      !isEqual(day, selectedDay) &&
+                        isToday(day) &&
+                        'text-red-500',
+                      !isEqual(day, selectedDay) &&
+                        !isToday(day) &&
+                        isSameMonth(day, firstDayCurrentMonth) &&
+                        'text-gray-900',
+                      !isEqual(day, selectedDay) &&
+                        !isToday(day) &&
+                        !isSameMonth(day, firstDayCurrentMonth) &&
+                        'text-gray-400',
                       isEqual(day, selectedDay) && isToday(day) && 'bg-red-500',
-                      isEqual(day, selectedDay) && !isToday(day) && 'bg-gray-900',
+                      isEqual(day, selectedDay) &&
+                        !isToday(day) &&
+                        'bg-gray-900',
                       !isEqual(day, selectedDay) && 'hover:bg-gray-200',
-                      (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
+                      (isEqual(day, selectedDay) || isToday(day)) &&
+                        'font-semibold',
                       'mx-auto flex h-8 w-8 items-center justify-center rounded-full'
                     )}
                   >
@@ -165,11 +176,11 @@ const Home: NextPage = () => {
                     </time>
                   </button>
                   <div className="w-1 h-1 mx-auto mt-1">
-                    {meetings.some(meeting =>
+                    {meetings.some((meeting) =>
                       isSameDay(parseISO(meeting.startDateTime), day)
                     ) && (
-                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                      )}
+                      <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -198,7 +209,7 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home;
+export default Home
 
 function Meeting({ meeting }: { meeting: TMeeting }) {
   let startDateTime = parseISO(meeting.startDateTime)
